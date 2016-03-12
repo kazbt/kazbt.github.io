@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="description" content="Трекинг заблокированных сайтов. Проверить доступен ли сайт в Казахстане.">
+<meta name="description" content="List of blocked websites. Check if a website is accessible in Kazakhstan.">
 
 <title>Kaz Blocking Tracker</title>
 <link rel="shortcut icon" href="./themes/favicon.ico" type="image/vnd.microsoft.icon">
@@ -39,11 +39,11 @@
 </style>
 </head>
 <body>
-<noscript><div style="padding:20em 0 40em 0em; background-color:grey;"><h1 style="color:white; text-align:center;">Для корректной работы сайта<br>требуется JavaScript</h1></div></noscript>
+<noscript><div style="padding:20em 0 40em 0em; background-color:grey;"><h1 style="color:white; text-align:center;">Please enable Javascript<br>to use this website.</h1></div></noscript>
 <span style="margin-right:1em"></span>
 <div class="ui large horizontal divided link list">
-    <span class="item"><div style="color:#2185d0">RUS</div></span>
-    <a href="index_en.html" class="item">ENG</a>
+    <a href="index.html" class="item">RUS</a>
+    <span class="item"><div style="color:#2185d0">ENG</div></span>
 </div>
 <div class="ui top aligned center aligned grid">
   <div class="column">
@@ -55,7 +55,7 @@
     </h1>
     <h2 class="ui header">
       <div class="content">
-        Доступен ли сайт в Казахстане?
+        Is it accessible in Kazakhstan?
       </div>
     </h2>
     
@@ -63,30 +63,30 @@
         <i class="notched circle loading icon"></i>
         <div class="content">
             <div class="header">
-            Загрузка...
+            Loading...
             </div>
-            <p>Ждем ответа (< 7 сек.)</p>
+            <p>Waiting for a reply (< 7s)</p>
         </div>
     </div>
 
     <div id="isError503" class="ui icon warning large message hidden">
         <i class="cloud download icon icon"></i>
-        Сервис временно недоступен. Попробуйте снова позднее.
+        Service Temporarily Unavailable.<br>Please try again later.
     </div>
     
     <div id="isError400" class="ui icon warning large message hidden">
         <i class="frown icon icon"></i>
-        Ошибка. Проверьте адрес веб-сайта.
+        Error. Please check the domain name.
     </div>
     
     <div id="isBad" class="ui icon error large message hidden">
         <i class="hide icon"></i>
-        Сайт недоступен&nbsp;<span id="timeCheckedB"></span>
+        Inaccessible&nbsp;<span id="timeCheckedB"></span>
     </div>
 
     <div id="isGood" class="ui icon info large message hidden">
         <i class="unhide outline icon"></i>
-        Сайт доступен&nbsp;<span id="timeCheckedG"></span>
+        Accessible&nbsp;<span id="timeCheckedG"></span>
     </div>
 
     <form class="ui massive form" onsubmit="doRequest(); return false;">
@@ -112,20 +112,20 @@
     <div class="row">
       <div class="column">
         <h2 class="ui icon header">
-          Топ недоступных сайтов
+          Top blocked websites
         </h2>
         <div class="ui error message">
             <div class="ui relaxed list"id="blocked">
-                <p>Загрузка...</p>
+                <p>Loading...</p>
             </div>
         </div>
       </div>
       <div class="column">
         <h2 class="ui icon header">
-          Последние запросы
+          Recent queries
         </h2>
         <div id="recent">
-            <p>Загрузка...</p>
+            <p>Loading...</p>
         </div>
       </div>
     </div>
@@ -141,7 +141,7 @@
                   <div class="ui statistics" style="margin-bottom: -3em">
                     <div class="statistic">
                         <div class="label">
-                            Всего недоступно сайтов
+                            Number of blocked websites
                         </div>
                         <div class="value">
                             <div id="numBlocked" style="color:#9f3a38">-</div>
@@ -150,7 +150,7 @@
                   </div>
               </h2>
               <h2>
-                  <a id="twitterBtn" class="ui basic black compact button" href="https://twitter.com/intent/tweet?text=Трекинг заблокированных сайтов в Казахстане&url=http://kazbt.com"><i class="twitter icon"></i>Tweet</a>
+                  <a id="twitterBtn" class="ui basic black compact button" href="https://twitter.com/intent/tweet?text=Tracking of blocked websites in Kazakhstan&url=http://kazbt.com"><i class="twitter icon"></i>Tweet</a>
               </h2>
               <h5 class="ui horizontal divider"></h5>
           </div>
@@ -163,27 +163,27 @@
     <div class="row">
       <div class="column">
         <h2 class="ui grey header">
-          О проекте
+          About
         </h2>
-        <p>KAZBT.COM отслеживает доступность в Казахстане более 1,000,000 самых популярных сайтов в Интернете.</p>
-        <p>Блокировки сайтов в Казахстане могут производиться только по решению суда. Однако, очень часто отсутствует прозрачность в деятельности исполнительных органов. 
-            Например, неясно почему недоступны такие сайты как ██████, ██████████ или █████████.</p>
+        <p>KAZBT.COM tracks whether 1M+ most-visited websites in the world are accessible in Kazakhstan. </p>
+        <p>A website can be blocked in Kazakhstan only by a court order. However, often, there is a real lack of transparency.
+            For example, it in unclear why some websites like ██████, ██████████, or █████████ are still blocked.</p>
       </div>
       <div class="column">
         <h2 class="ui grey header">
-          Как это работает
-        </h2>
-        <p>Чтобы проверить доступность сайта, выполняется два <code>HTTP</code> запроса с казахстанского и заграничного IP.
-		Сайт является <em>заблокированным</em> только в том случае, если сервер доступен за пределами РК, но недоступен с казахстанского IP.</p>
-        <p>Имейте ввиду, что результат проверки сайта зависит от доменного адреса. Например: <code>www.example.com</code> может быть доступен, а <code>example.com</code> 
-        &mdash; недоступен (другой сервер).</p>
+          How it works
+        </h2> 
+        <p>Two <code>HTTP</code> requests to a website are made from kazakhstani and non-kazakhstani IP addresses.
+		A website is reported as <em>blocked</em> only when the server was inaccessible from an IP in Kazakhstan, but acessible from outside the country.</p>
+        <p>Please note that query results depend on domain names. For example, <code>www.example.com</code> can be reported as accessible, 
+        but <code>example.com</code> as inaccessible (diffrent host IP).</p>
       </div>
       <div class="column">
         <h2 class="ui grey header">
-          Статистика
+          Statistics
         </h2>
-        <p>Результат проверки отдельного сайта кэшируется на 3 часа. Счётчик недоступных сайтов обновляется каждый день.</p>
-        <p>Каждую неделю производится проверка доступности 1,000,000 сайтов. В скором времени можно будеть просмотреть исторические данные для каждого сайта (неделя, месяц, год).</p>
+        <p>All query results are cached for 3 hours. The blocked websites counter is updated every day.</p>
+        <p>The status of 1M websites is checked every week. Soon anyone will be able to see the historical data for all websites.</p>
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@
 
 <div class="ui vertical inverted footer segment">
     <div class="ui center aligned container">
-      <p>Данные на сайте предоставлены по принципу "как есть" без гарантий любого рода.<br>KAZBT.COM не несет ответственности за ошибочные результаты и любые возможные убытки.</p>
+      <p>All data is provided only on a best-efforts basis with absolutely no warranties.<br>KAZBT.COM is not liable for any false positives, losses, or damages of any kinds.</p>
       <div class="ui horizontal inverted small divided link list">
         <span class="item">© 2016 kazbt.com</span>
         <span class="item">conceived by <a class="item" href="https://twitter.com/caspicat/">@caspicat</a></span>
