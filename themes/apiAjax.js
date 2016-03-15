@@ -108,6 +108,6 @@ function doRequest() {
                 getRecent();
             }
         });
-        $("#hostname").val('');
+        //$("#hostname").val('');
     }
 }
