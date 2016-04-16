@@ -1,4 +1,5 @@
-var urlAPI = "https://api.kazbt.com";
+//var urlAPI = "https://api.kazbt.com";
+var urlAPI = "http://127.0.0.1:8000";
 function getRecent() {
     $.getJSON( urlAPI+"/recent/", function( data ) {
         $("#recent").html('');
@@ -14,9 +15,14 @@ function getRecent() {
 function getBlocked() {
     $.getJSON( urlAPI+"/blocked/", function( data ) {
         if(data !=null) {
-            $("#blocked").html('');
+            $("#loadingTxt").html('');
             $(data).each(function( index ) {
-                $("#blocked").append('<div class="item"><div class="content">'+escape(data[index].domain)+'</div></div>');   
+				if (index < 14 ) {
+					$("#blocked").append('<div class="item"><div class="content">'+escape(data[index].domain)+'</div></div>');
+				}
+				else {
+					$("#accContent").append('<p>'+escape(data[index].domain)+'</p>');
+				}
             });
         }
     }).fail(function ( data) {

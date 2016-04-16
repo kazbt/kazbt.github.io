@@ -8,28 +8,34 @@
 
 <title>Kaz Blocking Tracker</title>
 <link rel="shortcut icon" href="./themes/favicon.ico" type="image/vnd.microsoft.icon">
-<link rel="stylesheet" type="text/css" href="./themes/default/components/reset.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/reset.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/grid.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/divider.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/segment.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/icon.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/list.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/accordion.min.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/site.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/container.css">
-<link rel="stylesheet" type="text/css" href="./themes/default/components/grid.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/header.css">
-<link rel="stylesheet" type="text/css" href="./themes/default/components/divider.css">
-<link rel="stylesheet" type="text/css" href="./themes/default/components/segment.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/form.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/input.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/button.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/message.css">
-<link rel="stylesheet" type="text/css" href="./themes/icon.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/label.min.css">
 <link rel="stylesheet" type="text/css" href="./themes/default/components/statistic.min.css">
-<link rel="stylesheet" type="text/css" href="./themes/default/components/list.min.css">
 
 <script src="./themes/default/components/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.7/components/accordion.min.js"></script>
 <script src="./themes/default/components/jquery.timeago.js" type="text/javascript"></script>
+<script src="./themes/default/components/jquery.timeago.ru.js" type="text/javascript"></script>
 <script src="./themes/apiAjax.js" type="text/javascript"></script>
 <style type="text/css">
 .column {
     max-width: 450px;
+}
+.tc {
+	text-align: left !important;
 }
 .ui.footer.segment {
     margin: 5em 0em 0em;
@@ -114,9 +120,16 @@
           Top blocked websites
         </h2>
         <div class="ui error message">
-            <div class="ui relaxed list"id="blocked">
-                <p>Loading...</p>
+            <div class="ui relaxed list" id="blocked">
+                <div id="loadingTxt"><p>Loading...</p></div>
             </div>
+			<div style="margin-top: 20px">
+				<div class="ui accordion">
+					  <div class="title">
+						<i class="dropdown icon"></i>Show more</div>
+					  <div class="content" id="accContent"></div>
+				</div>
+			</div>
         </div>
       </div>
       <div class="column">
@@ -165,24 +178,28 @@
           About
         </h2>
         <p>KAZBT.COM tracks whether 1M+ most-visited websites in the world are accessible in Kazakhstan. </p>
+		<p>All query results are cached for 3 hours. The blocked websites counter is updated every day. 
+			The status of websites is checked every week. Soon anyone will be able to see the historical data for all websites.</p>
         <p>A website can be blocked in Kazakhstan only by a court order. However, often, there is a real lack of transparency.
-            For example, it in unclear why some websites like ██████, ██████████, or █████████ are still blocked.</p>
+            For example, it in unclear why some websites like ██████, ██████████, or █████████ are still blocked.
+		</p>
       </div>
       <div class="column">
         <h2 class="ui grey header">
           How it works
         </h2> 
-        <p>Two <code>HTTP</code> requests to a website are made from kazakhstani and non-kazakhstani IP addresses.
-		A website is reported as <em>blocked</em> only when the server was inaccessible from an IP in Kazakhstan, but acessible from outside the country.</p>
+        <p>At most two <code>HTTP HEAD</code> requests to a website are made from kazakhstani and non-kazakhstani IP addresses.
+		A website is reported as <em>blocked</em> only when the server was not accessible from an IP in Kazakhstan, but was acessible from outside the country.</p>
         <p>Please note that query results depend on domain names. For example, <code>www.example.com</code> can be reported as accessible, 
         but <code>example.com</code> as inaccessible (diffrent host IP).</p>
       </div>
       <div class="column">
-        <h2 class="ui grey header">
-          Statistics
+		<h2 class="ui grey header">
+          Disclaimer
         </h2>
-        <p>All query results are cached for 3 hours. The blocked websites counter is updated every day.</p>
-        <p>The status of 1M websites is checked every week. Soon anyone will be able to see the historical data for all websites.</p>
+		<p>This is a completely safe test, and will do nothing to your system.</p>
+        <p>KAZBT.COM only makes a simple HEAD HTTP request and avoids creating unwanted traffic. Request results are cached for 3 hours.<p>
+		<p>All data is provided only on a best-efforts basis with absolutely no warranties. KAZBT.COM is not liable for any false positives, losses, or damages of any kinds.</p>
       </div>
     </div>
   </div>
@@ -190,13 +207,14 @@
 
 <div class="ui vertical inverted footer segment">
     <div class="ui center aligned container">
-      <p>All data is provided only on a best-efforts basis with absolutely no warranties.<br>KAZBT.COM is not liable for any false positives, losses, or damages of any kinds.</p>
       <div class="ui horizontal inverted small divided link list">
         <span class="item">© 2016 kazbt.com</span>
         <span class="item">conceived by <a class="item" href="https://twitter.com/caspicat/">@caspicat</a></span>
       </div>
     </div>
  </div>
+
+<script> $('.ui.accordion').accordion(); </script>
 <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-75003195-1']);
