@@ -42,7 +42,7 @@ function getCounter() {
 }
 function isValidURL(url) {
 	// allow to query IPs
-    return /^((\w+\.)?\w+\.\w+|((2[0-5]{2}|1[0-9]{2}|[0-9]{1,2})\.){3}(2[0-5]{2}|1[0-9]{2}|[0-9]{1,2}))(\/)?$/.test(url);
+    return /^((\w+\.)?[-\w]+\.\w+|((2[0-5]{2}|1[0-9]{2}|[0-9]{1,2})\.){3}(2[0-5]{2}|1[0-9]{2}|[0-9]{1,2}))(\/)?$/.test(url);
 }
 getCounter();
 getBlocked();
