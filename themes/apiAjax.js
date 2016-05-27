@@ -113,6 +113,8 @@ function doRequest() {
                 }
                 getRecent();
             }
+        }).fail(function ( data) {
+            $("#isError503").toggleClass('hidden');
         });
         //$("#hostname").val('');
     }
