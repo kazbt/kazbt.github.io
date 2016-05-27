@@ -93,9 +93,7 @@ function doRequest() {
         }
         $.getJSON( urlAPI+"?check="+host, function( data ) {
             $("#loading").toggleClass('hidden');
-            if (data.code == 503) {
-                $("#isError503").toggleClass('hidden');
-            } else if (data.code == 400) {
+            if (data.code == 400) {
                 $("#isError400").toggleClass('hidden');
             }
             else {
@@ -114,6 +112,7 @@ function doRequest() {
                 getRecent();
             }
         }).fail(function ( data) {
+            $("#loading").toggleClass('hidden');
             $("#isError503").toggleClass('hidden');
         });
         //$("#hostname").val('');
