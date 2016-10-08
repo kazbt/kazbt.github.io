@@ -1,5 +1,4 @@
-//var urlAPI = "https://api.kazbt.com";
-var urlAPI = "http://localhost:8000";
+var urlAPI = "https://api.kazbt.com";
 function getRecent() {
     $.getJSON( urlAPI+"/recent/", function( data ) {
         $("#recent").html('');
