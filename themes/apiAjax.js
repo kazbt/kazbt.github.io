@@ -1,4 +1,5 @@
-var urlAPI = "https://api.kazbt.com";
+//var urlAPI = "https://api.kazbt.com";
+var urlAPI = "http://localhost:8000";
 function getRecent() {
     $.getJSON( urlAPI+"/recent/", function( data ) {
         $("#recent").html('');
@@ -117,4 +118,154 @@ function doRequest() {
         });
         //$("#hostname").val('');
     }
+}
+function getHistory() {
+    var host = $("#hostname").val();
+    if (!$("#isError503").hasClass('hidden')) {
+        $("#isError503").toggleClass('hidden');
+    }
+    if (!$("#isError400").hasClass('hidden')) {
+        $("#isError400").toggleClass('hidden');
+    }
+    if (!$("#isError404").hasClass('hidden')) {
+        $("#isError404").toggleClass('hidden');
+    }
+    if (!$("#isBad").hasClass('hidden')) {
+        $("#isBad").toggleClass('hidden');
+    }
+    if (!$("#isGood").hasClass('hidden')) {
+        $("#isGood").toggleClass('hidden');
+    }
+    if (host === '') {
+        $('#errorMsg').html('');
+        if (document.URL.indexOf('en.html') > -1) {
+            $('#errorMsg').append('Please enter a website domain');   
+        } else {
+            $('#errorMsg').append('Пожалуйста, введите адрес веб-сайта');
+        }
+        if ($("#errorMsg").hasClass('hidden')) {
+            $("#errorMsg").toggleClass('hidden visible');
+        }
+        return;
+    } else if (!isValidURL(host)) {
+        $('#errorMsg').html('');
+        if (document.URL.indexOf('en.html') > -1) {
+            $('#errorMsg').append('Please enter a valid domain');
+        } else {
+            $('#errorMsg').append('Введите правильный адрес веб-сайта');
+        }
+        if ($("#errorMsg").hasClass('hidden')) {
+            $("#errorMsg").toggleClass('hidden visible');
+        }
+        return;
+    } else {
+        if (!$("#errorMsg").hasClass('hidden')) {
+            $("#errorMsg").toggleClass('hidden visible');
+        }
+        $.getJSON( urlAPI+"/history/?check="+host, function( data ) {
+            if (data.code == 400) {
+                $("#isError400").toggleClass('hidden');
+            }
+            else if (data.code == 404) {
+                $("#isError404").toggleClass('hidden');
+            }
+            else {
+                if ($("#canvasBtns").hasClass('hidden')) {
+                    $("#canvasBtns").toggleClass('hidden');
+                }
+                if ( window.myLine != undefined) {
+                    window.myLine.destroy();
+                }
+                drawGraph(data);
+            }
+        }).fail(function ( data) {
+            $("#isError503").toggleClass('hidden');
+        });
+    }
+}
+function resetZoom() {
+    window.myLine.resetZoom()
+}
+function deleteGraph() {
+    if ( window.myLine != undefined) {
+        window.myLine.destroy();
+    }
+    if (!$("#canvasBtns").hasClass('hidden')) {
+        $("#canvasBtns").toggleClass('hidden');
+    }
+}
+function drawGraph(data) {
+    var listData = [];
+    for (var i=0, len = data.timesChecked.length; i < len; i++) {
+        listData.push({x:new Date(data.timesChecked[i].dateChecked), y:data.timesChecked[i].isAccessible*1});
+    }
+    
+    var text = '(Нет)         Был доступен?         (Да)';
+    if (document.URL.indexOf('en.html') > -1) {
+        text = '(No)         Was accessible?         (Yes)';
+    }
+    var timeFormat = 'DD/MM/YYYY HH:mm';
+    var config = {
+        type: 'line',
+        exportEnabled: true,
+        data: {
+            datasets: [{
+                label: data.domain,
+                data: listData,
+                steppedLine: true,
+                spanGaps: false,
+                showLine: true,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        unit: 'month',
+                        unitStepSize: 1,
+                        format: timeFormat,
+                        tooltipFormat: 'll HH:mm'
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    },
+                    ticks: {
+                        maxRotation: 0
+                    }
+                }, ],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: text
+                    },
+                    ticks: {
+                        max: 1,
+                        min: 0,
+                        stepSize: 1
+                    }
+                }]
+            },
+            zoom: {
+                enabled: true,
+                drag: true,
+                mode: 'x',
+                limits: {
+                    max: 5,
+                    min: 1
+                }
+            }
+        }
+    };
+
+    config.data.datasets[0].backgroundColor = '#a9d5de';
+    config.data.datasets[0].pointBorderColor = '#276f86';
+    config.data.datasets[0].pointBackgroundColor = '#276f86';
+    config.data.datasets[0].pointBorderWidth = 5;
+    
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx, config);
 }
