@@ -253,8 +253,8 @@ function drawGraph(data) {
                 drag: true,
                 mode: 'x',
                 limits: {
-                    max: 5,
-                    min: 1
+                    max: 8,
+                    min: 0.5
                 }
             }
         }
