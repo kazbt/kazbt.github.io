@@ -217,7 +217,8 @@ canvas {
           How it works
         </h2> 
         <p>At most two <code>HTTP HEAD</code> requests to a website are made from kazakhstani and non-kazakhstani IP addresses.
-		A website is reported as <em>blocked</em> only when the server was not accessible from an IP in Kazakhstan, but was acessible from outside the country.</p>
+    A website is reported as <em>blocked</em> only when the server was not accessible from an IP in Kazakhstan, but was acessible from outside the country.</p>
+        <p>This project uses <a href="https://developers.google.com/speed/public-dns/">Google Public DNS</a> to resolve hostnames. Test results may vary if you use different DNS services.</p>
         <p>Please note that query results depend on domain names. For example, <code>www.example.com</code> can be reported as accessible, 
         but <code>example.com</code> as inaccessible (diffrent host IP).</p>
       </div>
